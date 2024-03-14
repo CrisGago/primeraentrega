@@ -11,13 +11,13 @@ router.get("/", (req, res) =>{
 });
 
 router.post("/", (req, res) =>{
-    // hago lo siguiente para ver que funcione lo tengo que sustituir
-    const {name, species}= req.body;
+    
+    const {id, title, description, price, stock}= req.body;
 
-    if(!name || !species) return res.status(400).send({error: "PROBANDO CONEXION CARTS"});
+    if(!id || !title || !description || !price || !stock) return res.status(400).send({error: "Error al cargar el carrito"});
 
-    carts.push({ name, species});
-    res.status(201).send({message:"probando conexion carts"});
+    carts.push({ id, title, description, price, stock});
+    res.status(201).send({message:"Carrito cargado correctamente, finalizar compra"});
     
 });
 export default router;

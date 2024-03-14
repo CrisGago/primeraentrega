@@ -3,11 +3,14 @@ import cartsRouter from "./routes/carts.router.js";
 import productsRouter from "./routes/products.router.js";
 import ProductManager from "./ProductManager.js";
 
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const PM = new ProductManager("./src/productos.json");
+
+
 
 app.use("/api/carts", cartsRouter);
 app.use("/api/products", productsRouter);
