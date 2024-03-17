@@ -5,8 +5,9 @@ import ProductManager from "./ProductManager.js";
 
 
 const app = express();
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 const PM = new ProductManager("./src/productos.json");
 
@@ -44,6 +45,7 @@ app.put("/api/products/:uid", async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
+
 });
 
 // Eliminar un producto

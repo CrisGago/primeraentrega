@@ -1,108 +1,68 @@
 [
-  {
-    "id": 1,
-    "title": "modulo1",
-    "description": "presupuestador",
-    "code": "sp142",
-    "price": "25000",
-    "status": "True",
-    "stock": 10,
-    "category": "A",
-    "thumbnail": "img1"
-  },
-  {
-    "id": 2,
-    "title": "modulo2",
-    "description": "ppto y planif",
-    "code": "sp143",
-    "price": "45000",
-    "status": "True",
-    "stock": 15,
-    "category": "A",
-    "thumbnail": "img2"
-       
-  },
-  {
-    "id": 3,
-    "title": "modulo5",
-    "description": "control",
-    "code": "sp150",
-    "price": "55000",
-    "status": "True",
-    "stock": 15,
-    "category": "A",
-    "thumbnail": "img5"      
-  },
-  {
-    "id": 4,
-    "title": "modulo4",
-    "description": "control",
-    "code": "sp140",
-    "status": "True",
-    "price": "44000",
-    "stock": 44,
-    "category": "A",
-    "thumbnail": "img4"    
-  },
-  {
-    "id": 5,
-    "title": "modulo6",
-    "description": "control",
-    "code": "sp160",
-    "price": "65000",
-    "status": "True",
-    "stock": 15,
-    "category": "A",
-    "thumbnail": "img6" 
-    
-  },
-  {
-    "id": 7,
-    "title": "modulo7",
-    "description": "control",
-    "code": "sp170",
-    "price": "57000",
-    "status": "True",
-    "stock": 17,
-    "category": "A",
-    "thumbnail": "img7"    
-  },
-  {
-    "id": 8,
-    "title": "modulo8",
-    "description": "control",
-    "code": "sp180",
-    "price": "58000",
-    "status": "True",
-    "stock": 85,
-    "category": "A",
-    "thumbnail": "img8"
-    
-  },
-  {
-    "id": 9,
-    "title": "modulo9",
-    "description": "control",
-    "code": "sp180",
-    "price": "98000",
-    "status": "True",
-    "stock": 95,
-    "category": "A",
-    "thumbnail": "img9"
-    
-  },
-  {
-    "id": 10,
-    "title": "modulo10",
-    "description": "control",
-    "code": "sp100",
-    "price": "10000",
-    "status": "True",
-    "stock": 10,
-    "category": "A",
-    "thumbnail": "img10"  
-    
-  }
-
-
+	{
+		"id": 4,
+		"title": "modulo4",
+		"description": "control",
+		"code": "sp140",
+		"status": "True",
+		"price": "44000",
+		"stock": 44,
+		"category": "A",
+		"thumbnail": "img4"
+	},
+	{
+		"id": 5,
+		"title": "modulo6",
+		"description": "control",
+		"code": "sp160",
+		"price": "65000",
+		"status": "True",
+		"stock": 15,
+		"category": "A",
+		"thumbnail": "img6"
+	},
+	{
+		"id": 7,
+		"title": "modulo7",
+		"description": "control",
+		"code": "sp170",
+		"price": "57000",
+		"status": "True",
+		"stock": 17,
+		"category": "A",
+		"thumbnail": "img7"
+	},
+	{
+		"id": 8,
+		"title": "modulo8",
+		"description": "control",
+		"code": "sp180",
+		"price": "58000",
+		"status": "True",
+		"stock": 85,
+		"category": "A",
+		"thumbnail": "img8"
+	},
+	{
+		"id": 9,
+		"title": "modulo9",
+		"description": "control",
+		"code": "sp180",
+		"price": "98000",
+		"status": "True",
+		"stock": 95,
+		"category": "A",
+		"thumbnail": "img9"
+	},
+	{
+		"id": 10,
+		"title": "modulo10",
+		"description": "control",
+		"code": "sp100",
+		"price": "10000",
+		"status": "True",
+		"stock": 10,
+		"category": "A",
+		"thumbnail": "img10"
+	}
 ]

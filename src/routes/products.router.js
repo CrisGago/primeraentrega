@@ -1,21 +1,37 @@
-import { Router } from "express";
+import { Router } from 'express';
+import ProductManager from "../ProductManager.js";
 
 const router = Router();
 
-const products=[];
+const productManager = new ProductManager("./src/productos.json");
 
-router.get("/", (req, res) =>{
-    res.send(products);
+router.get("/", async (req, res) => {
+    try {
+        const products = await productManager.getProducts();
+        res.send(products);
+    } catch (error) {
+        console.error("Error al traer los productos:", error.message);
+        res.status(500).send({ error: "Error al traer los productos" });
+    }
 
 });
 
-router.post("/", (req, res) =>{
+router.post("/", async (req, res) => {
+    try {
+
+        const {title, description, code, price, stock, category, thumbnail } = req.body;
+
+        if (!title || !description || !price || !thumbnail || !code || !stock) {
+            return res.status(400).send({error: "Error al ingresar el producto"});
+        }
+        
+        const message = await productManager.addProduct(title, description, code,price, stock, category, thumbnail);
+        res.status(201).send({message});
+ 
+    }   catch (error) {
+        console.error("Error al ingresar el producto:", error.message);
+        res.status(500).send({error: "Error al ingresar el producto"});
+    }
        
-       const {id, title, description, code, price, status, stock, category, thumbnail}= req.body;
-      
-       if(!id || !title || !description || !price || !thumbnail || !code || !stock) return res.status(400).send({error: "Error al ingresar el producto, verifique los datoss"});
-   
-       products.push({id, title, description, code, price, status, stock, category, thumbnail});
-       res.status(201).send({message:"El producto se agrego correctamete"});    
 });
 export default router;

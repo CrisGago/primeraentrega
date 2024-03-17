@@ -24,20 +24,7 @@ export default class ProductManager {
         }
     }
 
-    async GetId() {
-        try {
-            await this.initialize();
-            if (this.products.length > 0) {
-                return parseInt(this.products[this.products.length - 1].id) + 1;
-            }
-            return 1;
-        } catch (error) {
-            console.error("Error al obtener ID:", error.message);
-            throw error;
-        }
-    }
-
-    async addProduct(title, description, code, price, status, stock, category, thumbnail) {
+    async addProduct(title, description, code, price, stock, category, thumbnail) {
         try {
             const id = await this.GetId();
             
@@ -49,16 +36,18 @@ export default class ProductManager {
             }
 
             const newProduct = {
-                id,
+                id: id, //agrega el id generado en Getid
                 title,
                 description,
                 code,
                 price,
-                status,
+                status: true, //true por defecto
                 stock,
                 category,
                 thumbnail,
             };
+            console.log("Nuevo producto a agregar:", newProduct);
+
 
             if (!Object.values(newProduct).every(value => value !== undefined && value !== null && value !== "")) {
                 console.log("Completar todos los campos obligatorios");
@@ -73,7 +62,7 @@ export default class ProductManager {
             return "Error al agregar producto";
         }
     }
-
+    
     async getProducts() {
         try {
             await this.initialize();
@@ -101,7 +90,7 @@ export default class ProductManager {
     async updateProduct(id, updateFields) {
         try {
             await this.initialize();
-            const index = this.products.findIndex((producto) => producto.id === id);
+            const index = this.products.findIndex((producto) => producto.id == id);
             if (index === -1) {
                 throw new Error("Producto no encontrado");
             }
@@ -109,28 +98,47 @@ export default class ProductManager {
                 ...this.products[index],
                 ...updateFields,
             };
-            await this.saveToFile();
+            await fs.writeFile(this.path, JSON.stringify(this.products, null, "\t"));
+            const updateProduct = this.products[index];
+            return updateProduct;
+            
         } catch (error) {
             console.error("Error al actualizar el producto:", error.message);
             throw error;
         }
     }
 
-    async deleteProduct(id) {
-        try {
-            await this.initialize();
-            const index = this.products.findIndex((producto) => producto.id === id);
+    async deleteProduct (id) {
+        const productos = await this.getProducts();
+        const initLength = productos.length;
 
-            if (index === -1) {
-                throw new Error(`Producto con ID ${id} no encontrado`);
+        const productosProccesed = productos.filter(productos => productos.id != id);
+
+        const finalLength = productosProccesed.length;
+
+        try {
+            if (initLength == finalLength) {
+                throw new Error(`No fue posible eliminar el usuario ${id}`);
             }
 
-            this.products.splice(index, 1);
+            await fs.writeFile(this.path, JSON.stringify(productosProccesed, null, "\t"));
 
-            await this.saveToFile();
-            console.log(`Producto con ID ${id} eliminado exitosamente.`);
+            return `El usuario ${id} fue eliminado correctamente`;
+
+        } catch(e) {
+            return e.message;
+        }
+
+    }
+    async GetId() {
+        try {
+            await this.initialize();
+            if (this.products.length > 0) {
+                return parseInt(this.products[this.products.length - 1].id) + 1;
+            }
+            return 1;
         } catch (error) {
-            console.error("Error al eliminar producto:", error.message);
+            console.error("Error al obtener ID:", error.message);
             throw error;
         }
     }
