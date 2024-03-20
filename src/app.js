@@ -2,6 +2,7 @@ import express from "express";
 import cartsRouter from "./routes/carts.router.js";
 import productsRouter from "./routes/products.router.js";
 import ProductManager from "./ProductManager.js";
+import CartManager from "./CartManager.js";
 
 
 const app = express();
@@ -10,11 +11,10 @@ app.use(express.urlencoded({ extended: true }));
 
 
 const PM = new ProductManager("./src/productos.json");
+const CM = new CartManager("./src/carrito.json");
 
-
-
-app.use("/api/carts", cartsRouter);
 app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
 
 // Obtener todos los productos
 app.get("/api/products", async (req, res) => {
@@ -25,6 +25,22 @@ app.get("/api/products", async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// Obtener los productos hasta X limite
+ app.get("/api/products", async (req, res) => {
+     try {
+         const {limit} = req.query;
+         let products = await PM.getProducts()
+         if(limit){
+             const limitProducts = products.slice(0, limit);
+             return res.json(limitProducts);
+         }
+         return res.json(products);
+        
+     } catch (error) {
+         res.status(500).json({ error: error.message });
+     }
+ });
 
 // Agregar un nuevo producto
 app.post("/api/products", async (req, res) => {

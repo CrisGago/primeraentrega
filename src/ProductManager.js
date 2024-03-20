@@ -118,12 +118,12 @@ export default class ProductManager {
 
         try {
             if (initLength == finalLength) {
-                throw new Error(`No fue posible eliminar el usuario ${id}`);
+                throw new Error(`No fue posible eliminar el producto ${id}`);
             }
 
             await fs.writeFile(this.path, JSON.stringify(productosProccesed, null, "\t"));
 
-            return `El usuario ${id} fue eliminado correctamente`;
+            return `El producto ${id} fue eliminado correctamente`;
 
         } catch(e) {
             return e.message;
