@@ -1,11 +1,19 @@
 import express from "express";
+import handlebars from "express-handlebars";
 import cartsRouter from "./routes/carts.router.js";
 import productsRouter from "./routes/products.router.js";
-import ProductManager from "./ProductManager.js";
-import CartManager from "./CartManager.js";
+import viewsRouter from "./routes/views.Router.js";
+import __dirname from "./utils/utilsConst.js";
+import { Server } from "socket.io";
+import websocket from "./websocket.js";
+import ProductManager from "./dao/CartManagerFS.js";
+import CartManager from "./dao/ProductManagerFS.js";
+import mongoose from "mongoose";
 
 
 const app = express();
+const uri = "mongodb+srv://cris7gh:C0der_2024@cluster0.x8bucze.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+mongoose.connect(uri);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

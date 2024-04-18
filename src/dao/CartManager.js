@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export default class CartManager {
+export default class CartManagerFS {
     constructor(path) {
         this.path = path;
         this.carts = [];
@@ -57,7 +57,7 @@ export default class CartManager {
           if (!cart) {
             return {code: 404, status: 'carrito no encontrado'};
           }
-          let productExist = cart.products.find((product) => product.product === pid);
+          let productExist = cart.products.find((product) => product.produnct === pid);
           if (productExist) {
             productExist.quantity += 1;
           } else {

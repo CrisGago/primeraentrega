@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 
-export default class ProductManager {
+export default class ProductManagerFS {
     constructor(path) {
         this.path = path;
         this.products = [];
