@@ -1,8 +1,21 @@
-import cartModel from "./models/cartModel.js";
+import  cartModel  from "./models/cartModel.js";
+import productModel from "./models/productModel.js";
+
 
 class CartManagerDB {
+
+    async getAllcarts() {
+        try {
+            return await cartModel.find().lean();
+        } catch (error) {
+            console.error(error.message);
+            throw new Error("Error al buscar los productos");
+        }
+    }
+
     async addCart() {
         try {
+            
             const newCart = await cartModel.create({ products: [] });
             return { code: 200, status: `Carrito agregado con id: ${newCart._id}` };
         } catch (error) {

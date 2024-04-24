@@ -1,32 +1,27 @@
-//import { productManagerFS } from "./dao/ProductManagerFS.js";
 import { ProductManagerDB } from "./dao/ProductManagerDB.js";
 
-//const ProductFS = new productManagerFS("productos.json");
-const ProductBD = new ProductManagerDB();
+const productManager = new ProductManagerDB();
 
 export default (io) => {
     io.on("connection", (socket) =>{
 
         socket.on("crearProduct", async (data) =>{
             try{
-                await ProductBD.addProduct(data);
-                const products = await ProductBD.getAllProducts();
+                await productManager.addProduct(data); 
+                const products = await productManager.getAllProducts();
                 socket.emit("publishProducts", products);
-            }catch(error) {
+            } catch(error) {
                 socket.emit("statusError", error.message);
             }
-
         });
 
         socket.on("deleteProduct", async (data) =>{
             try{
-                const result = await ProductBD.deleteProduct(data.pid);
+                const result = await productManager.deleteProduct(data.pid);
                 socket.emit("publishProducts", result);
-            }catch (error) {
+            } catch (error) {
                 socket.emit("statusError", error.message);
             }
         });
     });
-
 }
-

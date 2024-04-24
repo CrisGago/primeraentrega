@@ -10,11 +10,11 @@ class ProductManagerDB {
         }
     }
 
-    async getProductById(id) {
+    async getProductById(pid) {
         try {
-            const product = await productModel.findOne({_id: id});
+            const product = await productModel.findOne({_id: pid});
             if (!product) 
-                throw new Error(`El producto ${id} no existe!`);
+                throw new Error(`El producto ${pid} no existe!`);
             return product;
         } catch (error) {
             console.error("Error al obtener producto por ID:", error.message);
@@ -22,8 +22,8 @@ class ProductManagerDB {
         }
     }
 
-    async addProduct(productos) {
-        const {title, description, code, price, stock, category, thumbnails} = productos;
+    async addProduct(product) {
+        const {title, description, code, price, stock, category, thumbnails} = product;
 
         if (!title || !description || !code || !price || !stock || !category) {
             throw new Error('Error al crear el producto');
@@ -38,9 +38,9 @@ class ProductManagerDB {
         }
     };
 
-    async updateProduct(id, updateFields) {
+    async updateProduct(pid, updateFields) {
         try {
-            const result = await productModel.findByIdAndUpdate(id, updateFields, { new: true });
+            const result = await productModel.findByIdAndUpdate({_id: pid}, updateFields, { new: true });
             if (!result) {
                 throw new Error("Producto no encontrado");
             }
@@ -51,31 +51,18 @@ class ProductManagerDB {
         }
     }
 
-    async deleteProduct(id) {
+    async deleteProduct(pid) {
         try {
-            const result = await productModel.deleteOne({ _id: id });
+            const result = await productModel.deleteOne({ _id: pid });
 
-            if (result.deletedCount === 0) throw new Error (`No fue posible eliminar el producto ${id}`);
+            if (result.deletedCount === 0) throw new Error (`No fue posible eliminar el producto ${pid}`);
             return result;
         } catch (error) {
             console.error(error.message);
-            throw new Error (`Error al eliminar el producto ${id}`);
+            throw new Error (`Error al eliminar el producto ${pid}`);
         }
     }
 
-    // async GetId() {
-    //     try {
-    //         const products = await productModel.find();
-    //         const productslength = products.length;
-    //         if (products.length > 0) {
-    //             return parseInt(products[products.length - 1].id) + 1;
-    //         }
-    //         return 1;
-    //     } catch (error) {
-    //         console.error("Error al obtener ID:", error.message);
-    //         throw error;
-    //     }
-    // }
 };
 
 export { ProductManagerDB };

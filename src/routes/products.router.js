@@ -11,8 +11,8 @@ const productManager = new ProductManagerDB();
 router.get("/", async (req, res) => {
     try {
         const result = await productManager.getAllProducts();
-        res.send( {
-            status: "success",
+        res.send({
+            status: 'success',
             payload: result
         })
     } catch (error) {
@@ -22,23 +22,21 @@ router.get("/", async (req, res) => {
 
 });
 
-router.get("/", async (req, res) => {
+router.get("/:pid", async (req, res) => {
     try {
 
         const result = await productManager.getProductById(req.params.id);
-        res.send( {
-            status: "success",
+        res.send({
+            status: 'sucess',
             payload: result
         });
-               
-    }   catch (error) {
-        res.status(400).send({
-              status: "success",
-              payload: result
-            });
+
+    } catch (error) {
+        console.error("Error al obtener el producto por ID:", error.message);
+        res.status(500).send({ error: "Error al obtener el producto por ID"});
     }
-       
-});
+    });
+
 
 router.post('/', uploader.array('thumbnails', 3), async (req, res) => {
 

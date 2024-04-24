@@ -59,3 +59,28 @@ button {
 #button-delete {
     background: #d51515;
 }
+/* aqui chat */
+body {
+    background-color: black;
+    color: white;
+}
+
+h1 {
+   text-align: center;   
+}
+input {
+    width: 50%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxMessages {
+    align-self: flex-start;
+    margin-left: 10px;
+}
