@@ -56,7 +56,7 @@ function cleanForm() {
     $('#category').value = '';
 }
 //aquí comienza el chat...
-const socket = io();
+//const socket = io();
 
 let user;
 let chatBox = document.querySelector("#chatBox");
