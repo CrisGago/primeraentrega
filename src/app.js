@@ -6,13 +6,13 @@ import viewsRouter from "./routes/views.Router.js";
 import __dirname from "./utils/utilsConst.js";
 import { Server } from "socket.io";
 import websocket from "./websocket_dos.js";
+//import websocket from "./websocket.js";
 // import ProductManager from "./dao/CartManagerFS.js";
 // import CartManager from "./dao/ProductManagerFS.js";
 import mongoose from "mongoose";
 
-
-
 const app = express();
+
 // const uri = "mongodb+srv://crisgh:eC0der2024@cluster0.x8bucze.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0";
 // mongoose.connect(uri);
 
@@ -30,9 +30,14 @@ app.use(express.static('public'));
 //Routes
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/api/messages", viewsRouter)
 app.use("/products", viewsRouter);
+app.use("/carts", viewsRouter);
 app.use("/", viewsRouter);
+app.use("./messages", viewsRouter);
 
+
+//Mongo connection
 const conexion = async() =>{
     try{
         await mongoose.connect("mongodb+srv://crisgh:eC0der2024@cluster0.x8bucze.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0");
@@ -42,11 +47,12 @@ const conexion = async() =>{
     }
 }
 conexion();
-
+//Local connection 
 const PORT = 8080;
 const httpServer = app.listen(PORT, () =>{
     console.log(`Start server PORT ${PORT}`);
 });
+//websocket
 const io = new Server(httpServer);
 websocket(io);
 

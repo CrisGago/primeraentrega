@@ -8,18 +8,35 @@ const router = Router();
 //const productManager = new ProductManagerfs("./src/productos.json");
 const productManager = new ProductManagerDB();
 
+const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT = 10;
+const DEFAULT_SORT = 'createdAt';
+
 router.get("/", async (req, res) => {
     try {
-        const result = await productManager.getAllProducts();
+        // Obtener parámetros de consulta
+        const page = parseInt(req.query.page) || DEFAULT_PAGE;
+        const limit = parseInt(req.query.limit) || DEFAULT_LIMIT;
+        const sort = req.query.sort || DEFAULT_SORT;
+
+        // Calcular el índice de inicio
+        const startIndex = (page - 1) * limit;
+
+        // Obtener productos paginados
+        const result = await productManager.getAllProducts({
+            skip: startIndex,
+            limit: limit,
+            sort: sort
+        });
+
         res.send({
             status: 'success',
             payload: result
-        })
+        });
     } catch (error) {
         console.error("Error al traer los productos:", error.message);
         res.status(500).send({ error: "Error al traer los productos" });
     }
-
 });
 
 router.get("/:pid", async (req, res) => {
@@ -33,9 +50,9 @@ router.get("/:pid", async (req, res) => {
 
     } catch (error) {
         console.error("Error al obtener el producto por ID:", error.message);
-        res.status(500).send({ error: "Error al obtener el producto por ID"});
+        res.status(500).send({ error: "Error al obtener el producto por ID" });
     }
-    });
+});
 
 
 router.post('/', uploader.array('thumbnails', 3), async (req, res) => {
@@ -98,6 +115,7 @@ router.delete('/:pid', async (req, res) => {
             message: error.message
         });
     }
+
 });
 
 export default router;

@@ -36,7 +36,7 @@ class CartManagerDB {
 
     async addProductToCart(cartId, productId) {
         try {
-            const cart = await cartModel.findById(cartId);
+            const cart = await cartModel.findById(cartId.toString());
             if (!cart) {
                 return { code: 404, status: "Carrito no encontrado" };
             }

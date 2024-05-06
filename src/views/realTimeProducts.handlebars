@@ -3,7 +3,7 @@
     <hr>
     <div class="products-form">
         <h2>Crear Producto</h2>
-        <form>
+        <form id="add-products-form" method="post" action="/api/products">
             <label for="title">Título</label>
             <input name="title" id="title" type="text">
 
@@ -25,7 +25,8 @@
             {{!-- <label for="thumbnails">Imágenes</label>
             <input name="thumbnails" id="thumbnails" type="file" multiple> --}}
 
-            <button id="button-create" onclick="createProduct(event)">Crear</button>
+            {{!-- <button id="button-create" onclick="createProduct(event)">Crear</button> --}}
+            <button id="button-create" = type="submit">Crear</button>
         </form>
     </div>
 
@@ -39,7 +40,10 @@
                 <p>Categoria: {{this.category}}</p>
                 <p>Descripción: {{this.description}}</p>
                 <p>Precio: $ {{this.price}}</p>
-                <button id="button-delete" onclick="deleteProduct({{this.id}})">Eliminar</button>
+                {{!-- <button id="button-delete" onclick="deleteProduct({{this.pid}})">Eliminar</button> --}}
+                <button id="button-delete" onclick="deleteProduct('{{this._id}}')">Eliminar</button>
+
+                
             </div>
         {{/each}}
     </div>

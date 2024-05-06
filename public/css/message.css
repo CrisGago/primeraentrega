@@ -1,0 +1,28 @@
+ /*  aqui chat */
+ body {
+     background-color: rgb(160, 148, 148);
+     color: black;
+ }
+
+ h1 {
+     text-align: center;
+ }
+
+ .chatbox {
+     width: 50%;
+     text-align: center;
+     margin-bottom: 10px;
+ }
+
+ .box-message {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .boxMessages {
+     align-self: flex-start;
+     margin-left: 10px;
+
+ }
