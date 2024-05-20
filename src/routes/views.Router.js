@@ -1,7 +1,7 @@
 import { Router } from 'express';
 //import { ProductManagerFS } from '../dao/ProductManagerFS.js';
 import { ProductManagerDB } from "../dao/ProductManagerDB.js";
-import MessageManager from '../dao/messageManager.js';
+import { MessageManager } from '../dao/messageManager.js';
 
 
 
@@ -9,7 +9,7 @@ import MessageManager from '../dao/messageManager.js';
 const router = Router();
 //const productManager = new ProductManagerFS('products.json');
 const productManager = new ProductManagerDB();
-const messageManager = new MessageManager();
+const messageManager  = new MessageManager();
 const nessage = [];
 
 

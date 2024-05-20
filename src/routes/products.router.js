@@ -8,26 +8,18 @@ const router = Router();
 //const productManager = new ProductManagerfs("./src/productos.json");
 const productManager = new ProductManagerDB();
 
-const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT = 10;
-const DEFAULT_SORT = 'createdAt';
 
 router.get("/", async (req, res) => {
     try {
         // Obtener parámetros de consulta
-        const page = parseInt(req.query.page) || DEFAULT_PAGE;
-        const limit = parseInt(req.query.limit) || DEFAULT_LIMIT;
-        const sort = req.query.sort || DEFAULT_SORT;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const sort = req.query.sort || 'asc';
+        const query = req.query.query || '';
 
-        // Calcular el índice de inicio
-        const startIndex = (page - 1) * limit;
-
+        
         // Obtener productos paginados
-        const result = await productManager.getAllProducts({
-            skip: startIndex,
-            limit: limit,
-            sort: sort
-        });
+       const result = await productManager.getAllProducts(page, limit, sort, query);
 
         res.send({
             status: 'success',

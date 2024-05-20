@@ -1,19 +1,32 @@
 import productModel from "./models/productModel.js";
+import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 class ProductManagerDB {
-    async getAllProducts() {
+
+    // Agregar el plugin de paginación al esquema de producto
+
+    async getAllProducts(page = 1, limit = 10, sort = 'asc', query = '') {
         try {
-            return await productModel.find().lean();
+            const startIndex = (page - 1) * limit;
+            const filter = query ? { $or: [{ category: query }, { availability: query }] } : {};
+            const options = {
+                skip: startIndex,
+                limit: limit,
+                sort: sort ? { price: sort } : null
+            };
+            const products = await productModel.find(filter, null, options);
+            return products;
         } catch (error) {
-            console.error(error.message);
+            console.error("Error al buscar los productos:", error.message);
             throw new Error("Error al buscar los productos");
         }
     }
 
     async getProductById(pid) {
         try {
-            const product = await productModel.findOne({_id: pid});
-            if (!product) 
+            const product = await productModel.findOne({ _id: pid });
+            if (!product)
                 throw new Error(`El producto ${pid} no existe!`);
             return product;
         } catch (error) {
@@ -23,14 +36,14 @@ class ProductManagerDB {
     }
 
     async addProduct(product) {
-        const {title, description, code, price, stock, category, thumbnails} = product;
+        const { title, description, code, price, stock, category, thumbnails } = product;
 
         if (!title || !description || !code || !price || !stock || !category) {
             throw new Error('Error al crear el producto');
         }
 
         try {
-            const result = await productModel.create({title, description, code, price, stock, category, thumbnails: thumbnails ?? []});
+            const result = await productModel.create({ title, description, code, price, stock, category, thumbnails: thumbnails ?? [] });
             return result;
         } catch (error) {
             console.error(error.message);
@@ -40,7 +53,7 @@ class ProductManagerDB {
 
     async updateProduct(pid, updateFields) {
         try {
-            const result = await productModel.findByIdAndUpdate({_id: pid}, updateFields, { new: true });
+            const result = await productModel.findByIdAndUpdate({ _id: pid }, updateFields, { new: true });
             if (!result) {
                 throw new Error("Producto no encontrado");
             }
@@ -55,11 +68,11 @@ class ProductManagerDB {
         try {
             const result = await productModel.deleteOne({ _id: pid });
 
-            if (result.deletedCount === 0) throw new Error (`No fue posible eliminar el producto ${pid}`);
+            if (result.deletedCount === 0) throw new Error(`No fue posible eliminar el producto ${pid}`);
             return result;
         } catch (error) {
             console.error(error.message);
-            throw new Error (`Error al eliminar el producto ${pid}`);
+            throw new Error(`Error al eliminar el producto ${pid}`);
         }
     }
 

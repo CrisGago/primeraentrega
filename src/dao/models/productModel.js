@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import mongoosePage from 'mongoose-paginate-v2';
+import mongoosePaginate from 'mongoose-paginate-v2';
+
 
 const productCollection = "products";
 
@@ -39,6 +40,9 @@ const productSchema = mongoose.Schema({
         default: []
     }
 });
+
+// Aplicar el plugin de paginación al esquema de producto
+productSchema.plugin(mongoosePaginate);
 
 const productModel = mongoose.model(productCollection, productSchema);
 
